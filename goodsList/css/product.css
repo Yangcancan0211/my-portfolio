@@ -1,0 +1,86 @@
+    .crumbs {
+        height: 63px;
+        line-height: 63px;
+        font-size: 12px;
+    }
+    .crumbs .item:last-child {
+        color:  #000;
+    }
+    .operation {
+    background-color:  #fff;
+    padding: 0 24px;
+    }
+     .operation .row li.item {
+            cursor: pointer;
+        }
+    .operation > .row {
+        display: flex;
+    }
+    .operation > .row .item {
+        width: 104px;
+        height: 48px;
+        line-height: 48px;
+        font-size: 12px;
+        color: #000;
+    }
+        .operation > .row .item:first-child {
+            color: #666;
+            cursor: auto;
+        }
+        .operation > .row .item.active {
+            color: red;
+        }
+        .product {
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 20px;
+            justify-content: space-between;
+        }
+        .product > .item {
+            width: 291px;
+            height: 365px;
+            background-color: #fff;
+            margin-bottom: 12px;
+        }
+        .product >.item.empty{
+            height: 0;
+        }
+        .product > .item:hover {
+            box-shadow: 0 0 10px 5px rgba(0, 0, 0, .1);
+        }
+        .product > .item a{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .product > .item .album{
+            height: 200px;
+            width: 200px;
+            margin:30px 20px 0 0;
+        }
+        .product > .item .name{
+            font-weight: 700;
+            color: #000;
+        }
+        .product > .item .discount{
+            margin: 12px 0;
+            color: #666;
+        }
+        .product > .item .price{
+            font-weight: 700;
+            font-size: 16px;
+            color: red;
+        }
+        .product > .item .service{
+            display: flex;
+            justify-content: center;
+            margin: 5px 3px 0 0;
+        }
+        .product > .item .service .tip{
+            margin: 0 3px;
+            padding: 0 3px;
+            font-size: 12px;
+            border: 1px solid red;
+            border-radius: 3px;
+            color: red;
+        }

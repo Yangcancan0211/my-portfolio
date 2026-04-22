@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+   <link rel="stylesheet" href="./css/reset.css">
+   <link rel="stylesheet" href="./css/common.css">
+   <link rel="stylesheet" href="./css/product.css"> 
+</head>
+<body>
+    <!-- 商品展示 -->
+      <div class="wrapper">
+        <!-- 面包屑导航 -->
+        <div class="crumbs">
+        <span class="item">首页</span>
+        <span>&gt;</span>
+        <span class="item">笔记本</span>
+        </div>
+      <!-- 对内容的操作-->
+       <div class="operation">
+        <ul class="row category">
+            <li class="item">分类: </li>
+            <li class="item">笔记本</li>
+            <li class="item">台式机</li>
+            <li class="item">智慧屏</li>
+        </ul> 
+        <ul class="row discounty">
+            <li class="item">服务优惠: </li>
+            <li class="item active">仅看有货</li>
+            <li class="item">分期免息</li>
+            <li class="item">优惠商品</li>
+        </ul>
+         <ul class="row sort">
+            <li class="item">排序: </li>
+            <li class="item active">综合</li>
+            <li class="item">最新</li>
+            <li class="item">评论数</li>
+            <li class="item">价格</li>
+
+         </ul>
+       </div>
+        <!-- 商品列表 -->
+         <ul class="product">      
+         </ul> 
+          </div>
+        <script src="./Json/product_data.js"></script>
+       <script>
+            //资源服务器路径
+            var serverPath="https://res.vmallres.com/pimages"
+            //1.动态展示商品列表数据
+            var productsEl = document.querySelector(".product");
+            //2.服务优惠的筛选
+            var operationEl = document.querySelector(".operation");
+            var discountEl = operationEl.querySelector(".discounty");
+            var discountFilters = []
+            for (var i = 1;i<discountEl.children.length;i++){
+                var discountItemEl = discountEl.children[i];
+                discountItemEl.onclick=function(){
+                    this.classList.toggle("active");
+                    if(this.classList.contains("active")){
+                        discountFilters.push(this.textContent.trim());
+                    }else{
+                     var filterItem = this.textContent.trim();
+                     var filterIndex = discountFilters.findIndex(function(item){
+                        return item === filterItem
+                     })
+                     discountFilters.splice(filterIndex,1);
+                    }
+                    //过滤resultList
+                     filterResultList(); // 修复：调用正确的函数名
+                }
+                    
+            }
+            //3.根据服务优惠的筛选结果展示商品
+            //封装过滤函数
+            //思路:  1.获取服务优惠中的item
+                //   2.监听item的的点击 *切换active
+                //   3.根据item的点击获取filterItem *将其放在一个数组里面
+                //   4.根据最新的filter,过滤数据 *filterResultListAction
+                //   5.根据最新的过滤结果展示商品 *showResultListAction
+            var showResultList= resultList;
+            function filterResultList( ) {
+                showResultList=resultList.filter(function(item){ // 修复：更新全局变量而不是创建局部变量
+                    var isFlag = true
+                 for(var filterItem of discountFilters){
+                    if(!item.service.includes(filterItem)){
+                        isFlag = false
+                        break
+                    }
+                 }
+                 return isFlag
+                })
+               showResultListAction()
+            }
+             //4./封装函数 通过for循环展示商品
+           showResultListAction()
+           function showResultListAction() {
+            productsEl.innerHTML="";
+              for (var i=0 ; i<showResultList.products.length;i++){
+                //获取一条数据
+                var resultItem = showResultList.products[i];
+                //将一条数据转成界面一个item
+               var itmlEl=document.createElement("li");
+                itmlEl.className="item";
+                //将item添加到商品列表中
+                productsEl.appendChild(itmlEl);
+                itmlEl.innerHTML=`
+                 <li class="item">
+                <a href="#">
+                   <img class="album" src="./img/product_01.png" alt="">
+                    <div class="name">${resultItem.name}</div>
+                    <div class="discount">${resultItem.description}</div>
+                    <div class="service">
+                        <span class="tip">${resultItem.service}</span>
+                        <span class="tip">12期0分期利息</span>
+                    </div>
+                           <div class="price">¥ ${resultItem.price}</div>
+                </a>
+            </li>
+                `
+                }
+                  //添加空的item
+             for (var i=0;i<3;i++){
+                var itemEl = document.createElement("li")
+                itemEl.classList.add("item")
+                itemEl.classList.add("empty")
+                productsEl.append(itemEl)
+             }
+
+           }
+        </script>
+</body>
+</html>
